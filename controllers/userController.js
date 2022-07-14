@@ -33,11 +33,39 @@ module.exports = {
           )
           .then(() => res.json({ message: 'User and associated thoughts deleted!' }))
           .catch((err) => res.status(500).json(err));    
-},
+    },
 
-    updateuser(req,res){
-        User.findoneandUpdate({_id:req.params.id},
+    updateUser(req,res){
+        User.findOneAndUpdate({_id:req.params.id},
             {$set:req.body},
             {runValidators: true, new:true})
-    }
+    },
+
+    addFriend(req, res) {
+        User.findOneAndUpdate({ _id: req.params.userId }, { $addToSet: { friends: req.params.friendId } }, { new: true })
+          .then((User) => {
+            if (!User) {
+              return res.status(404).json({ message: 'User with this ID does not exist.' });
+            }
+            res.json(User);
+          })
+          .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+          });
+      },
+      // Remove a friend
+      removeFriend(req, res) {
+        User.findOneAndUpdate({ _id: req.params.userId }, { $pull: { friends: req.params.friendId } }, { new: true })
+          .then((User) => {
+            if (!User) {
+              return res.status(404).json({ message: 'User with this ID does not exist.' });
+            }
+            res.json(User);
+          })
+          .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+          });
+      },
 };
