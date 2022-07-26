@@ -18,7 +18,7 @@ installation
 -Open your Git bash application
 -Type in command mkdir Social-Network-Works
 -By using cd command go into Mini personal assistant
--Enter git clone https://sachmilan.github.io/professional-README/
+-Enter git clone https://github.com/sachmilan/Social-Api.git
 
 ## Credits
 
